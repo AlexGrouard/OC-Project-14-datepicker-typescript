@@ -1,6 +1,6 @@
 import React from "react"
-import styles from "./styles/DatePicker.module.scss"
 import Header from "./components/Header/Header"
+import styles from "./styles/DatePicker.module.scss"
 
 function DatePicker() {
 	return (
@@ -8,6 +8,7 @@ function DatePicker() {
 			<input type='text' />
 			<div className={styles.dateContainer}>
 				<Header />
+				<p>Date Picker</p>
 			</div>
 		</main>
 	)
