@@ -1,5 +1,6 @@
 import React from "react"
 import Header from "./components/Header/Header"
+import Week from "./components/Week/Week"
 import styles from "./styles/DatePicker.module.scss"
 
 function DatePicker() {
@@ -8,7 +9,7 @@ function DatePicker() {
 			<input type='text' />
 			<div className={styles.dateContainer}>
 				<Header />
-				<p>Date Picker</p>
+				<Week />
 			</div>
 		</main>
 	)
