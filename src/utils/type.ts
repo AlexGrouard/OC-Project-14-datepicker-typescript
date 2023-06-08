@@ -12,6 +12,8 @@ export type MonthType = {
 	11: string
 	12: string
 }
-export type NewDateType = {
-	date: string
+export type daysGridProps = {
+	day: number
+	month: number
+	year: number
 }
