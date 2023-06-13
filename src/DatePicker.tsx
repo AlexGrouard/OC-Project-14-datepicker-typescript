@@ -1,3 +1,4 @@
+import { DateTime } from "luxon"
 import { useEffect, useState } from "react"
 import house from "./assets/house-solid.svg"
 import leftArrow from "./assets/leftArrow.svg"
@@ -8,18 +9,22 @@ import styles from "./styles/DatePicker.module.scss"
 import { MonthType } from "./utils/type"
 
 function DatePicker() {
-	const [currentDate, setCurrentDate] = useState(new Date())
-	const [day, setDay] = useState(new Date().getDate())
-	const [month, setMonth] = useState(new Date().getMonth())
-	const [year, setYear] = useState(new Date().getFullYear())
+	const dt = DateTime.local()
+	const [currentDate, setCurrentDate] = useState("")
+	const [day, setDay] = useState(dt.day)
+	const [month, setMonth] = useState(dt.month)
+	const [year, setYear] = useState(dt.year)
 	const [stringMonth, setStringMonth] = useState("")
 
 	const today = () => {
-		setDay(new Date().getDate())
-		setMonth(new Date().getMonth())
-		setYear(new Date().getFullYear())
+		setCurrentDate(DateTime.now().toLocaleString())
+		setDay(dt.day)
+		setMonth(dt.month)
+		setYear(dt.year)
 	}
-
+	const changeDate = () => {
+		console.log(currentDate)
+	}
 	const monthDecrease = () => {
 		const newMonth = month - 1
 		if (newMonth < 1) {
@@ -38,10 +43,21 @@ function DatePicker() {
 
 	useEffect(() => {
 		setStringMonth(months[month as keyof MonthType])
-	}, [month])
+		if (currentDate) {
+			const dt = DateTime.fromISO(currentDate)
+			setDay(dt.day)
+			setMonth(dt.month)
+			setYear(dt.year)
+		}
+	}, [month, currentDate])
 
 	return (
 		<main className={styles.main}>
+			<input
+				type='string'
+				value={currentDate}
+				onChange={(e) => setCurrentDate(e.target.value)}
+			/>
 			<div className={styles.header}>
 				<img
 					src={leftArrow}
@@ -61,7 +77,7 @@ function DatePicker() {
 					onClick={monthIncrease}
 				/>
 			</div>
-			<DayGrid day={day} month={month} year={year}/>
+			<DayGrid day={day} month={month} year={year} />
 		</main>
 	)
 }

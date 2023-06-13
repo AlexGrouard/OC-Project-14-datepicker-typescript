@@ -1,37 +1,32 @@
+import { DateTime } from "luxon"
 import { useEffect, useState } from "react"
 import { daysShort } from "../../data/data"
 import { daysGridProps } from "../../utils/type"
+import styles from "./dayGrid.module.css"
 
 function dayGrid({ day, month, year }: daysGridProps): JSX.Element {
-	const firstDay = new Date(year, month, 1)
-	console.log(firstDay)
-	//const [longMonth, setLongMonth] = useState(false)
+	let grid: number[] = []
+	const startDay = DateTime.fromObject({ day: 1, month, year }).weekday
+	const daysInMonth = DateTime.fromObject({ day: 1, month, year }).daysInMonth
+	const daysInPrevMonth = DateTime.fromObject({
+		day: 1,
+		month: month - 1,
+		year,
+	}).daysInMonth
 
-	/*   if (longMonth) {
-    //same grid but with 31 days
-    return (
-      <div>day</div>
-    )
-  }
-   else if (february){
-    //same grid but with 28 days
-    return (
-      <div>day</div>
-    )
-  } 
-  else
-  //same grid with 30 days
-    return (
-      <div>day</div>
-    ) */
+	grid = [...Array(daysInMonth).keys()]
+	grid = grid.map((day) => day + 1)
+	const prevMonthDays = [...Array(startDay - 1).keys()]
+	prevMonthDays.forEach((day) => {
+		grid.unshift(daysInPrevMonth - day)
+	})
+	const nextMonthDays = [...Array(7 - (grid.length % 7)).keys()]
+	nextMonthDays.forEach((day) => {
+		grid.push(day + 1)
+	})
 
-	// the grid must be 7 x 5
-	// get in what day start the month
-	// then add the day from last month to the day start
-	//then complete the grid with all days
-	// if the last part of the grid is empty
-	// add the day of next month
 
+	console.log(grid)
 	return (
 		<table>
 			<thead>
@@ -42,10 +37,6 @@ function dayGrid({ day, month, year }: daysGridProps): JSX.Element {
 				</tr>
 			</thead>
 			<tbody>
-				<tr></tr>
-				<tr></tr>
-				<tr></tr>
-				<tr></tr>
 				<tr></tr>
 			</tbody>
 		</table>

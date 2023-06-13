@@ -1,15 +1,13 @@
-import { MonthType } from "../utils/type"
-
-export const days = [
-	"Sunday",
-	"Monday",
-	"Tuesday",
-	"Wednesday",
-	"Thursday",
-	"Friday",
-	"Saturday",
-]
-export const daysShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+export const days = {
+	1: "Monday",
+	2: "Tuesday",
+	3: "Wednesday",
+	4: "Thursday",
+	5: "Friday",
+	6: "Saturday",
+	7: "Sunday",
+}
+export const daysShort = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 export const months = {
 	1: "January",
 	2: "February",
