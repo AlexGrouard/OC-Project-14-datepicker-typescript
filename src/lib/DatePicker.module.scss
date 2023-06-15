@@ -5,7 +5,7 @@
     margin: 10px auto;
     border-radius: 5px;
     font-family: 'Roboto', sans-serif;
-    background-color: lightgray;
+
 }
 
 .header{
@@ -23,4 +23,13 @@
 
 .visible {
     display: block;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+select{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
 }

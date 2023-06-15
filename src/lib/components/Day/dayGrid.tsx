@@ -4,7 +4,12 @@ import { daysShort } from "../../data/data"
 import { DaysGridProps } from "../../utils/type"
 import styles from "./dayGrid.module.scss"
 
-function dayGrid({ day, month, year }: DaysGridProps): JSX.Element {
+function dayGrid({
+	day,
+	month,
+	year,
+	handleDayChange,
+}: DaysGridProps): JSX.Element {
 	let grid: number[] = []
 
 	const startDay = DateTime.local(year, month, 1).weekday
@@ -43,6 +48,10 @@ function dayGrid({ day, month, year }: DaysGridProps): JSX.Element {
 		return acc
 	}, [])
 
+	const getDay = (day: number) => {
+		console.log(day.valueOf())
+	}
+
 	return (
 		<table>
 			<thead>
@@ -57,10 +66,12 @@ function dayGrid({ day, month, year }: DaysGridProps): JSX.Element {
 			<tbody>
 				{grid.map((row: any, i) => (
 					<tr key={i}>
-						{row.map((mapDay: any, i: number) => (
+						{row.map((mapDay: number, i: number) => (
 							<td
 								className={mapDay === day ? styles.highlight : styles.normalDay}
 								key={i}
+								data-value={mapDay}
+								onClick={() => getDay(mapDay)}
 							>
 								{mapDay}
 							</td>

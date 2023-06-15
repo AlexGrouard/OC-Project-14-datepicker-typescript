@@ -1,5 +1,5 @@
-import { months } from "../../data/data"
-import { SelectMonthProps } from "../../utils/type"
+import { months } from "../data/data"
+import { SelectMonthProps } from "../utils/type"
 
 function SelectMonth({
 	current,

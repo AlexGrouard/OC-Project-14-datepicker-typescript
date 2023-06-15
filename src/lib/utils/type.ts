@@ -16,6 +16,7 @@ export type DaysGridProps = {
 	day: number
 	month: number
 	year: number
+	handleDayChange: (e: React.FormEventHandler<HTMLDataElement>) => void
 }
 export type DatePickerProps = {
 	yearRange: {

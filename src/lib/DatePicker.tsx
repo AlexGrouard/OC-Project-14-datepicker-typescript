@@ -1,12 +1,12 @@
 import { DateTime } from "luxon"
 import { useEffect, useRef, useState } from "react"
+import styles from "./DatePicker.module.scss"
 import house from "./assets/house-solid.svg"
 import leftArrow from "./assets/leftArrow.svg"
 import rightArrow from "./assets/rightArrow.svg"
 import DayGrid from "./components/Day/dayGrid"
-import SelectMonth from "./components/SelectMonth/SelectMonth"
-import SelectYear from "./components/SelectYear/SelectYear"
-import styles from "./styles/DatePicker.module.scss"
+import SelectMonth from "./components/SelectMonth"
+import SelectYear from "./components/SelectYear"
 import { DatePickerProps } from "./utils/type"
 
 function DatePicker({ yearRange }: DatePickerProps): JSX.Element {
@@ -46,7 +46,12 @@ function DatePicker({ yearRange }: DatePickerProps): JSX.Element {
 		}
 	}
 
-	//handle select change for month and year
+	//handle select change for day month and year
+	const handleDayChange = (e: React.FormEventHandler<HTMLDataElement>) => {
+		//setDay(mapDay)
+		console.log(e)
+	}
+
 	const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setMonth(parseInt(e.target.value))
 	}
@@ -54,7 +59,7 @@ function DatePicker({ yearRange }: DatePickerProps): JSX.Element {
 		setYear(parseInt(e.target.value))
 	}
 
-	//handle input change 
+	//handle input change
 	const handleInputDatePicker = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.target.value === ""
 			? setCurrentDate(todayFrench)
@@ -126,7 +131,14 @@ function DatePicker({ yearRange }: DatePickerProps): JSX.Element {
 						onClick={monthIncrease}
 					/>
 				</div>
-				{<DayGrid day={day} month={month} year={year} />}
+				{
+					<DayGrid
+						day={day}
+						month={month}
+						year={year}
+						handleDayChange={handleDayChange}
+					/>
+				}
 			</div>
 		</main>
 	)

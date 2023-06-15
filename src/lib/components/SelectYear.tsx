@@ -1,4 +1,4 @@
-import { SelectYearProps } from "../../utils/type"
+import { SelectYearProps } from "../utils/type"
 
 function SelectYear({
 	yearRange,

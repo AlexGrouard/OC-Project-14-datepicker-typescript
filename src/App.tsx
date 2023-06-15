@@ -1,5 +1,5 @@
-import DatePicker from "./DatePicker"
-import "./styles/App.css"
+import "./App.css"
+import DatePicker from "./lib/DatePicker"
 
 function App() {
 	return (
