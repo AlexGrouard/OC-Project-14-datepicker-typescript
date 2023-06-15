@@ -12,8 +12,28 @@ export type MonthType = {
 	11: string
 	12: string
 }
-export type daysGridProps = {
+export type DaysGridProps = {
 	day: number
 	month: number
 	year: number
+}
+export type DatePickerProps = {
+	yearRange: {
+		start: number
+		end: number
+	}
+}
+
+export type SelectYearProps = {
+	yearRange: {
+		start: number
+		end: number
+	}
+	current: number
+	handleYearChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+}
+
+export type SelectMonthProps = {
+	current: number
+	handleMonthChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }

@@ -1,12 +1,26 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap);
+
+.main {
+    width: 300px;
+    margin: 10px auto;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    background-color: lightgray;
+}
+
 .header{
     display:flex;
+    justify-content: space-between;
+    align-items: center;
     img{
         margin-left: 10px;
     }
 }
 
-.main {
-    max-width: 300px;
-    border: 1px solid lightgray;
-    border-radius: 5px;
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
 }

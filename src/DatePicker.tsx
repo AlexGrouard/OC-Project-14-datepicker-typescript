@@ -1,83 +1,133 @@
 import { DateTime } from "luxon"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import house from "./assets/house-solid.svg"
 import leftArrow from "./assets/leftArrow.svg"
 import rightArrow from "./assets/rightArrow.svg"
 import DayGrid from "./components/Day/dayGrid"
-import { months } from "./data/data"
+import SelectMonth from "./components/SelectMonth/SelectMonth"
+import SelectYear from "./components/SelectYear/SelectYear"
 import styles from "./styles/DatePicker.module.scss"
-import { MonthType } from "./utils/type"
+import { DatePickerProps } from "./utils/type"
 
-function DatePicker() {
+function DatePicker({ yearRange }: DatePickerProps): JSX.Element {
 	const dt = DateTime.local()
-	const [currentDate, setCurrentDate] = useState("")
-	const [day, setDay] = useState(dt.day)
-	const [month, setMonth] = useState(dt.month)
-	const [year, setYear] = useState(dt.year)
-	const [stringMonth, setStringMonth] = useState("")
+	const todayFrench: string = DateTime.now().setLocale("fr").toLocaleString()
+	const [currentDate, setCurrentDate] = useState<string>("")
+	const [day, setDay] = useState<number>(dt.day)
+	const [month, setMonth] = useState<number>(dt.month)
+	const [year, setYear] = useState<number>(dt.year)
+	const [isHidden, setIsHidden] = useState<boolean>(true)
+
+	const dropdownRef = useRef<HTMLDivElement>(null)
 
 	const today = () => {
-		setCurrentDate(DateTime.now().toLocaleString())
-		setDay(dt.day)
-		setMonth(dt.month)
-		setYear(dt.year)
+		setDay(DateTime.now().day)
+		setMonth(DateTime.now().month)
+		setYear(DateTime.now().year)
 	}
-	const changeDate = () => {
-		console.log(currentDate)
-	}
+
 	const monthDecrease = () => {
-		const newMonth = month - 1
+		const newMonth: number = month - 1
 		if (newMonth < 1) {
 			setMonth(12)
 			setYear(year - 1)
-		} else setMonth(newMonth)
+		} else {
+			setMonth(newMonth)
+		}
 	}
 
 	const monthIncrease = () => {
-		const newMonth = month + 1
+		const newMonth: number = month + 1
 		if (newMonth > 12) {
 			setMonth(1)
 			setYear(year + 1)
-		} else setMonth(newMonth)
+		} else {
+			setMonth(newMonth)
+		}
+	}
+
+	//handle select change for month and year
+	const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setMonth(parseInt(e.target.value))
+	}
+	const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		setYear(parseInt(e.target.value))
+	}
+
+	//handle input change 
+	const handleInputDatePicker = (e: React.ChangeEvent<HTMLInputElement>) => {
+		e.target.value === ""
+			? setCurrentDate(todayFrench)
+			: setCurrentDate(e.target.value)
+
+		const [day, month, year] = e.target.value.split("/")
+
+		if (day && month && year) {
+			setDay(parseInt(day))
+			setMonth(parseInt(month))
+			setYear(parseInt(year))
+		} else {
+			setDay(DateTime.now().day)
+			setMonth(DateTime.now().month)
+			setYear(DateTime.now().year)
+		}
 	}
 
 	useEffect(() => {
-		setStringMonth(months[month as keyof MonthType])
-		if (currentDate) {
-			const dt = DateTime.fromISO(currentDate)
-			setDay(dt.day)
-			setMonth(dt.month)
-			setYear(dt.year)
+		//handle close dropdown when click outside
+		const handleClickOutside = (event: MouseEvent) => {
+			if (
+				dropdownRef.current &&
+				!dropdownRef.current.contains(event.target as Node)
+			) {
+				setIsHidden(true)
+			}
 		}
-	}, [month, currentDate])
+
+		document.addEventListener("mousedown", handleClickOutside)
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside)
+		}
+	}, [])
 
 	return (
-		<main className={styles.main}>
+		<main className={styles.main} ref={dropdownRef}>
 			<input
 				type='string'
 				value={currentDate}
-				onChange={(e) => setCurrentDate(e.target.value)}
+				onChange={handleInputDatePicker}
+				onClick={() => setIsHidden(false)}
 			/>
-			<div className={styles.header}>
-				<img
-					src={leftArrow}
-					alt='left Arrow'
-					width={20}
-					onClick={monthDecrease}
-				/>
-				<img src={house} alt='home' width={20} onClick={today} />
-				<div>
-					<span>{stringMonth}</span>
-					<span>{year}</span>
+			<div className={isHidden ? styles.hidden : styles.visible}>
+				<div className={styles.header}>
+					<img
+						src={leftArrow}
+						alt='left Arrow'
+						width={20}
+						onClick={monthDecrease}
+					/>
+					<img src={house} alt='home' width={20} onClick={today} />
+					<div>
+						<SelectMonth
+							current={month}
+							handleMonthChange={handleMonthChange}
+						/>
+
+						<SelectYear
+							yearRange={yearRange}
+							current={year}
+							handleYearChange={handleYearChange}
+						/>
+					</div>
+					<img
+						src={rightArrow}
+						alt='right Arrow'
+						width={20}
+						onClick={monthIncrease}
+					/>
 				</div>
-				<img
-					src={rightArrow}
-					alt='right Arrow'
-					width={20}
-					onClick={monthIncrease}
-				/>
+				{<DayGrid day={day} month={month} year={year} />}
 			</div>
-			<DayGrid day={day} month={month} year={year} />
 		</main>
 	)
 }

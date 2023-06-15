@@ -1,10 +1,22 @@
-.table{
-  display: flex;
-  flex-wrap: wrap;
+table{
+text-align: center;
+margin: 0 auto;
+width: 100%;
 }
 .node {
     width: 20px;
     height: 20px;
     background-color: white;
     outline: 1px solid lightgray;
+  }
+
+  .highlight {
+    background-color: lightgray;
+  }
+
+  .normalDay{
+    cursor: pointer;
+    &:hover {
+      background-color: lightblue;
+    }
   }
