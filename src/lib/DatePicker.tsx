@@ -9,7 +9,14 @@ import SelectMonth from "./components/SelectMonth"
 import SelectYear from "./components/SelectYear"
 import { DatePickerProps } from "./utils/type"
 
-function DatePicker({ yearRange }: DatePickerProps): JSX.Element {
+/**
+ * Date Picker component , return the selected date in the format dd/mm/yyyy and need to be given an year range for more flexible use.
+ * @param {object} yearRange - object with start and end year
+ * @param returnDate - function to return the selected date
+ * @returns 
+ */
+
+function DatePicker({ yearRange, returnDate }: DatePickerProps): JSX.Element {
 	const dt = DateTime.local()
 	const todayFrench: string = DateTime.now().setLocale("fr").toLocaleString()
 	const [currentDate, setCurrentDate] = useState<string>("")
@@ -46,12 +53,7 @@ function DatePicker({ yearRange }: DatePickerProps): JSX.Element {
 		}
 	}
 
-	//handle select change for day month and year
-	const handleDayChange = (e: React.FormEventHandler<HTMLDataElement>) => {
-		//setDay(mapDay)
-		console.log(e)
-	}
-
+	//handle select change for month and year
 	const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setMonth(parseInt(e.target.value))
 	}
@@ -79,8 +81,11 @@ function DatePicker({ yearRange }: DatePickerProps): JSX.Element {
 	}
 
 	useEffect(() => {
+		const newCurrent = `${day}/${month}/${year}`
+		setCurrentDate(newCurrent)
+		returnDate(newCurrent)
 		//handle close dropdown when click outside
-		const handleClickOutside = (event: MouseEvent) => {
+		const handleClickOutside: any = (event: MouseEvent) => {
 			if (
 				dropdownRef.current &&
 				!dropdownRef.current.contains(event.target as Node)
@@ -93,7 +98,7 @@ function DatePicker({ yearRange }: DatePickerProps): JSX.Element {
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside)
 		}
-	}, [])
+	}, [day, month, year, returnDate])
 
 	return (
 		<main className={styles.main} ref={dropdownRef}>
@@ -136,7 +141,7 @@ function DatePicker({ yearRange }: DatePickerProps): JSX.Element {
 						day={day}
 						month={month}
 						year={year}
-						handleDayChange={handleDayChange}
+						getDay={(mapDay: number) => setDay(mapDay)}
 					/>
 				}
 			</div>
