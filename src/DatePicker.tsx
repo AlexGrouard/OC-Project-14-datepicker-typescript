@@ -4,10 +4,10 @@ import styles from "./DatePicker.module.scss"
 import house from "./assets/house-solid.svg"
 import leftArrow from "./assets/leftArrow.svg"
 import rightArrow from "./assets/rightArrow.svg"
-import DayGrid from "./components/Day/dayGrid"
-import SelectMonth from "./components/SelectMonth"
-import SelectYear from "./components/SelectYear"
-import { DatePickerProps } from "./utils/type"
+import DayGrid from "./lib/components/Day/dayGrid"
+import SelectMonth from "./lib/components/SelectMonth"
+import SelectYear from "./lib/components/SelectYear"
+import { DatePickerProps } from "./lib/utils/type"
 
 /**
  * Date Picker component , return the selected date in the format dd/mm/yyyy and need to be given an year range for more flexible use.
