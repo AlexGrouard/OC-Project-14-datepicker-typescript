@@ -1,19 +1,19 @@
 import { DateTime } from "luxon"
 import { useEffect, useRef, useState } from "react"
-import styles from "./DatePicker.module.scss"
 import house from "./assets/house-solid.svg"
 import leftArrow from "./assets/leftArrow.svg"
 import rightArrow from "./assets/rightArrow.svg"
-import DayGrid from "./lib/components/Day/dayGrid"
-import SelectMonth from "./lib/components/SelectMonth"
-import SelectYear from "./lib/components/SelectYear"
-import { DatePickerProps } from "./lib/utils/type"
+import DayGrid from "./components/Day/dayGrid"
+import SelectMonth from "./components/SelectMonth"
+import SelectYear from "./components/SelectYear"
+import styles from "./style/DatePicker.module.scss"
+import { DatePickerProps } from "./utils/type"
 
 /**
  * Date Picker component , return the selected date in the format dd/mm/yyyy and need to be given an year range for more flexible use.
  * @param {object} yearRange - object with start and end year
  * @param returnDate - function to return the selected date
- * @returns 
+ * @returns
  */
 
 function DatePicker({ yearRange, returnDate }: DatePickerProps): JSX.Element {

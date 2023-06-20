@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
+import DatePicker from "../src/lib/DatePicker"
 import "./App.css"
-import DatePicker from "./lib/DatePicker"
 
 function App() {
 	const [date, setDate] = useState<string>("")

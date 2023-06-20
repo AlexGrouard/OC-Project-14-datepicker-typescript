@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DateTime } from "luxon"
 import { daysShort } from "../../data/data"
+import styles from "../../style/dayGrid.module.scss"
 import { DaysGridProps } from "../../utils/type"
-import styles from "./dayGrid.module.scss"
 
 /**
  * Handle the grid of days for the selected month
