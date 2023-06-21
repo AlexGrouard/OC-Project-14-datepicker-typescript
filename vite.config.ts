@@ -1,11 +1,27 @@
 // vite.config.js
-//import react from "@vitejs/plugin-react"
+import react from "@vitejs/plugin-react"
 import { resolve } from "path"
 import { defineConfig } from "vite"
 import dts from "vite-plugin-dts"
-//import sassDts from "vite-plugin-sass-dts"
+import sassDts from "vite-plugin-sass-dts"
 
 export default defineConfig({
+	css: {
+		preprocessorOptions: {
+			scss: {
+				additionalData: `@use "@/styles" as common;`,
+				importer(...args) {
+					if (args[0] !== "@/styles") {
+						return
+					}
+
+					return {
+						file: `${resolve(__dirname, "./src/lib/style")}`
+					}
+				}
+			}
+		}
+	},
 	build: {
 		lib: {
 			// Could also be a dictionary or array of multiple entry points
@@ -28,5 +44,15 @@ export default defineConfig({
 			}
 		}
 	},
-	plugins: [dts()]
+	plugins: [
+		react(),
+		sassDts({
+			enabledMode: ["development", "production"],
+			global: {
+				generate: true,
+				outFile: resolve(__dirname, "./src/style.d.ts")
+			}
+		}),
+		dts()
+	]
 })

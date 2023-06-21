@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from "react"
 import house from "./assets/house-solid.svg"
 import leftArrow from "./assets/leftArrow.svg"
 import rightArrow from "./assets/rightArrow.svg"
-import DayGrid from "./components/Day/dayGrid"
 import SelectMonth from "./components/SelectMonth"
 import SelectYear from "./components/SelectYear"
+import DayGrid from "./components/dayGrid"
 import styles from "./style/DatePicker.module.scss"
 import { DatePickerProps } from "./utils/type"
 
@@ -22,17 +22,21 @@ function DatePicker({ yearRange, returnDate }: DatePickerProps): JSX.Element {
 	const [currentDate, setCurrentDate] = useState<string>("")
 	const [day, setDay] = useState<number>(dt.day)
 	const [month, setMonth] = useState<number>(dt.month)
-	const [year, setYear] = useState<number>(dt.year)
+	const [year, setYear] = useState<number>(yearRange.end)
 	const [isHidden, setIsHidden] = useState<boolean>(true)
-
 	const dropdownRef = useRef<HTMLDivElement>(null)
 
 	const today = () => {
-		setDay(DateTime.now().day)
-		setMonth(DateTime.now().month)
-		setYear(DateTime.now().year)
+		if (yearRange.end !== DateTime.now().year) {
+			setDay(DateTime.now().day)
+			setMonth(DateTime.now().month)
+			setYear(yearRange.start)
+		} else {
+			setDay(DateTime.now().day)
+			setMonth(DateTime.now().month)
+			setYear(DateTime.now().year)
+		}
 	}
-
 	const monthDecrease = () => {
 		const newMonth: number = month - 1
 		if (newMonth < 1) {

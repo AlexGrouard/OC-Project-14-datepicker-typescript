@@ -14,7 +14,7 @@ function App() {
 		<form>
 			<label> Date </label>
 			<DatePicker
-				yearRange={{ start: 2016, end: 2026 }}
+				yearRange={{ start: 1980, end: 2000 }}
 				returnDate={handleReturnDate}
 			/>
 		</form>
