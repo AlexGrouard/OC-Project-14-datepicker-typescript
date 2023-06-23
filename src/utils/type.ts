@@ -25,6 +25,7 @@ export type DatePickerProps = {
 		end: number
 	}
 	returnDate: (date: string) => void
+	placeholder: string
 }
 
 export type SelectYearProps = {

@@ -16,7 +16,11 @@ import { DatePickerProps } from "./utils/type"
  * @returns
  */
 
-function DatePicker({ yearRange, returnDate }: DatePickerProps): JSX.Element {
+function DatePicker({
+	yearRange,
+	returnDate,
+	placeholder
+}: DatePickerProps): JSX.Element {
 	const dt = DateTime.local()
 	const todayFrench: string = DateTime.now().setLocale("fr").toLocaleString()
 	const [currentDate, setCurrentDate] = useState<string>("")
@@ -37,6 +41,7 @@ function DatePicker({ yearRange, returnDate }: DatePickerProps): JSX.Element {
 			setYear(DateTime.now().year)
 		}
 	}
+
 	const monthDecrease = () => {
 		const newMonth: number = month - 1
 		if (newMonth < 1) {
@@ -67,9 +72,7 @@ function DatePicker({ yearRange, returnDate }: DatePickerProps): JSX.Element {
 
 	//handle input change
 	const handleInputDatePicker = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.target.value === ""
-			? setCurrentDate(todayFrench)
-			: setCurrentDate(e.target.value)
+		e.target.value != "" && setCurrentDate(e.target.value) 
 
 		const [day, month, year] = e.target.value.split("/")
 
@@ -85,9 +88,13 @@ function DatePicker({ yearRange, returnDate }: DatePickerProps): JSX.Element {
 	}
 
 	useEffect(() => {
+		console.log("currentDate", currentDate)
 		const newCurrent = `${day}/${month}/${year}`
-		setCurrentDate(newCurrent)
-		returnDate(newCurrent)
+		if (currentDate != newCurrent && currentDate != "") {
+			setCurrentDate(newCurrent)
+			returnDate(newCurrent)
+		}
+
 		//handle close dropdown when click outside
 		const handleClickOutside: any = (event: MouseEvent) => {
 			if (
@@ -102,12 +109,13 @@ function DatePicker({ yearRange, returnDate }: DatePickerProps): JSX.Element {
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside)
 		}
-	}, [day, month, year, returnDate])
+	}, [day, month, year, returnDate, currentDate])
 
 	return (
 		<main className='main' ref={dropdownRef}>
 			<input
 				type='string'
+				placeholder={placeholder}
 				value={currentDate}
 				onChange={handleInputDatePicker}
 				onClick={() => setIsHidden(false)}
