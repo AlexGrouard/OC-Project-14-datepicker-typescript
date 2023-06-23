@@ -18,9 +18,17 @@
 		"strict": true,
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
-		"noFallthroughCasesInSwitch": true
+		"noFallthroughCasesInSwitch": true,
+		"declaration": true
 	},
-	"include": ["src"],
-	"exclude": ["node_modules", "view"],
-	"references": [{ "path": "./tsconfig.node.json" }]
+	"include": [
+		"src/",
+		"src/utils",
+		"src/components",
+		"src/data",
+		"src/style",
+		"src/DatePicker.tsx",
+		"src/*.d.ts"
+	],
+	"exclude": ["node_modules/", "view/"]
 }

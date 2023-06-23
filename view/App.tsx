@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react"
-import DatePicker from "../src/lib/DatePicker"
+import React, { useState } from "react"
+import DatePicker from "../src/DatePicker"
 import "./App.css"
 
 function App() {
@@ -7,9 +7,6 @@ function App() {
 	const handleReturnDate = (date: string) => {
 		setDate(date)
 	}
-	useEffect(() => {
-		console.log(date)
-	}, [date])
 	return (
 		<form>
 			<label> Date </label>

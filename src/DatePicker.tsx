@@ -6,7 +6,7 @@ import rightArrow from "./assets/rightArrow.svg"
 import SelectMonth from "./components/SelectMonth"
 import SelectYear from "./components/SelectYear"
 import DayGrid from "./components/dayGrid"
-import styles from "./style/DatePicker.module.scss"
+import "./style/style.css"
 import { DatePickerProps } from "./utils/type"
 
 /**
@@ -105,15 +105,15 @@ function DatePicker({ yearRange, returnDate }: DatePickerProps): JSX.Element {
 	}, [day, month, year, returnDate])
 
 	return (
-		<main className={styles.main} ref={dropdownRef}>
+		<main className='main' ref={dropdownRef}>
 			<input
 				type='string'
 				value={currentDate}
 				onChange={handleInputDatePicker}
 				onClick={() => setIsHidden(false)}
 			/>
-			<div className={isHidden ? styles.hidden : styles.visible}>
-				<div className={styles.header}>
+			<div className={isHidden ? "hidden" : "visible"}>
+				<div className='header'>
 					<img
 						src={leftArrow}
 						alt='left Arrow'

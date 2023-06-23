@@ -1,31 +1,14 @@
 // vite.config.js
-import react from "@vitejs/plugin-react"
 import { resolve } from "path"
 import { defineConfig } from "vite"
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js"
 import dts from "vite-plugin-dts"
-import sassDts from "vite-plugin-sass-dts"
 
 export default defineConfig({
-	css: {
-		preprocessorOptions: {
-			scss: {
-				additionalData: `@use "@/styles" as common;`,
-				importer(...args) {
-					if (args[0] !== "@/styles") {
-						return
-					}
-
-					return {
-						file: `${resolve(__dirname, "./src/lib/style")}`
-					}
-				}
-			}
-		}
-	},
 	build: {
 		lib: {
 			// Could also be a dictionary or array of multiple entry points
-			entry: resolve(__dirname, "src/lib/DatePicker.tsx"),
+			entry: resolve(__dirname, "src/DatePicker.tsx"),
 			name: "date-picker-typescript",
 			// the proper extensions will be added
 			fileName: "DatePicker"
@@ -44,15 +27,5 @@ export default defineConfig({
 			}
 		}
 	},
-	plugins: [
-		react(),
-		sassDts({
-			enabledMode: ["development", "production"],
-			global: {
-				generate: true,
-				outFile: resolve(__dirname, "./src/style.d.ts")
-			}
-		}),
-		dts()
-	]
+	plugins: [dts(), cssInjectedByJsPlugin()]
 })

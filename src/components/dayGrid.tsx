@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DateTime } from "luxon"
 import { daysShort } from "../data/data"
-import styles from "../style/dayGrid.module.scss"
+import "../style/style.css"
 import { DaysGridProps } from "../utils/type"
 
 /**
@@ -58,7 +58,7 @@ function dayGrid({ day, month, year, getDay }: DaysGridProps): JSX.Element {
 			<thead>
 				<tr>
 					{daysShort.map((day) => (
-						<th className={styles.weekday} key={day}>
+						<th className='weekday' key={day}>
 							{day}
 						</th>
 					))}
@@ -78,16 +78,14 @@ function dayGrid({ day, month, year, getDay }: DaysGridProps): JSX.Element {
 									mapDay = mapDay.replace(" prev", "")
 									mapDay = mapDay.replace(" next", "")
 									return (
-										<td className={styles.greyDay} key={i}>
+										<td className='greyDay' key={i}>
 											{mapDay}
 										</td>
 									)
 								} else {
 									return (
 										<td
-											className={
-												mapDay === day ? styles.highlight : styles.normalDay
-											}
+											className={mapDay === day ? "highlight" : "normalDay"}
 											key={i}
 											data-value={mapDay}
 											onClick={() => getDay(mapDay)}
