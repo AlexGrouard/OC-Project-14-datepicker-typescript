@@ -16,11 +16,7 @@ import { DatePickerProps } from "./utils/type"
  * @returns
  */
 
-function DatePicker({
-	yearRange,
-	returnDate,
-	placeholder
-}: DatePickerProps): JSX.Element {
+function DatePicker({ yearRange, returnDate }: DatePickerProps): JSX.Element {
 	const dt = DateTime.local()
 	const todayFrench: string = DateTime.now().setLocale("fr").toLocaleString()
 	const [currentDate, setCurrentDate] = useState<string>("")
@@ -41,7 +37,6 @@ function DatePicker({
 			setYear(DateTime.now().year)
 		}
 	}
-
 	const monthDecrease = () => {
 		const newMonth: number = month - 1
 		if (newMonth < 1) {
@@ -72,7 +67,9 @@ function DatePicker({
 
 	//handle input change
 	const handleInputDatePicker = (e: React.ChangeEvent<HTMLInputElement>) => {
-		e.target.value != "" && setCurrentDate(e.target.value) 
+		e.target.value === ""
+			? setCurrentDate(todayFrench)
+			: setCurrentDate(e.target.value)
 
 		const [day, month, year] = e.target.value.split("/")
 
@@ -88,13 +85,9 @@ function DatePicker({
 	}
 
 	useEffect(() => {
-		console.log("currentDate", currentDate)
 		const newCurrent = `${day}/${month}/${year}`
-		if (currentDate != newCurrent && currentDate != "") {
-			setCurrentDate(newCurrent)
-			returnDate(newCurrent)
-		}
-
+		setCurrentDate(newCurrent)
+		returnDate(newCurrent)
 		//handle close dropdown when click outside
 		const handleClickOutside: any = (event: MouseEvent) => {
 			if (
@@ -109,13 +102,12 @@ function DatePicker({
 		return () => {
 			document.removeEventListener("mousedown", handleClickOutside)
 		}
-	}, [day, month, year, returnDate, currentDate])
+	}, [day, month, year, returnDate])
 
 	return (
 		<main className='main' ref={dropdownRef}>
 			<input
 				type='string'
-				placeholder={placeholder}
 				value={currentDate}
 				onChange={handleInputDatePicker}
 				onClick={() => setIsHidden(false)}
